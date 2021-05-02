@@ -13,6 +13,9 @@
 <?php
     include "./database.php";
     $db = Database::connect();
+
+    $req = $db->query("SELECT * FROM `advert` ORDER BY id DESC");
+    $adverts = $req->fetchAll();
 ?>
 
 
@@ -42,19 +45,19 @@
         </div>
         <div class= "row justify-content-around">
 <?php
-    foreach ($db->query("SELECT * FROM `advert` ORDER BY id DESC") as $ad) {
-?>
+    foreach ($adverts as $advert){?>
         <div class="card mt-5" style="width: 22rem;">
             <div class="card-header" name="type" style="font-size : 2em; color: blue;">
-                <p><?= $ad['type']?></p>
+                <p><?= $advert['type']?></p>
             </div>
+            <?= $advert['reservation_message'] ? '<p><span class="badge bg-danger">Réservé</span></p>' : '' ?>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item" name="title" style="text-transform : uppercase;"><b><?= $ad['title']?></b></li>
-                <li class="list-group-item" name ="description"><?= $ad['description']?></li>
-                <li class="list-group-item" name="postal-city"><?= "{$ad['postal_code']}  {$ad['city']}" ?></li>
-                <li class="list-group-item" name="price" style="font-size : 2em"><b><?= "{$ad['price']} €"?></b></li>
+                <li class="list-group-item" name="title" style="text-transform : uppercase;"><b><?= $advert['title']?></b></li>
+                <li class="list-group-item" name ="description"><?= $advert['description']?></li>
+                <li class="list-group-item" name="postal-city"><?= "{$advert['postal_code']}  {$advert['city']}" ?></li>
+                <li class="list-group-item" name="price" style="font-size : 2em"><b><?= "{$advert['price']} €"?></b></li>
             </ul>
-        <a type="button" class= "btn btn-primary" style="width:50%" href="./viewone.php?id=<?=$ad['id'] ?>">Consulter l'annonce</a>
+        <a type="button" class= "btn btn-primary" style="width:50%" href="./viewone.php?id=<?=$advert['id'] ?>">Consulter l'annonce</a>
         </div>
     <?php }
     Database::disconnect();

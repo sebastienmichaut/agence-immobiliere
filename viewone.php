@@ -63,16 +63,17 @@ if ($_POST) {
                     <li class="list-group-item" name="price" style=" font-size : 2em"><b><?= "{$ad['price']} €"?></b></li>
                 </ul>
             </div>             
-        </div>
-        <div class= "row">
-            <p style="color:red"><?= $ad['reservation_message']?></p><br>
-            <div>
-            <form method="post">
-                <textarea name="reservation_message" cols="30" rows="10"></textarea>
-                <button type="submit" class= "btn btn-primary" style="width:30%">Je réserve</button>
-            </form>
-            </div>    
-        </div>          
+        </div>  
+                <?php
+                if($advert['reservation_message']) { ?>
+                    <p class="card-text"><b>Message de réservation :</b><br><?= $advert['reservation_message'] ?></p>
+                <?php } else { ?>
+                    <form method="post">
+                        <label for="reservation_message" class="form-label">Message de réservation</label>
+                        <textarea name="reservation_message" id="reservation_message" class="form-control" placeholder="Votre message de réservation"></textarea>
+                        <input type="submit" value="Envoyer" class="btn btn-primary mt-2">
+                    </form>
+                <?php } ?>          
     </div>
 
 
